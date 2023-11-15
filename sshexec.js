@@ -86,6 +86,13 @@ module.exports = function(RED) {
 			if (node.ssh_ctrl()) {
 				node.ssh_ctrl().exec(cmdobj.arg, cmdobj.param,
 							function (err, stdout, stderr) {
+
+					if(err) {
+						node.error(err);
+						node.status({fill:"red",shape:"dot",text:"error"});
+						return;
+					}
+					
 					let msg = cmdobj.msg, msg2 = null, msg3 = null;
 
 					delete msg.payload;
